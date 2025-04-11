@@ -1,29 +1,46 @@
 let container = document.querySelector("#container")
 container.style.display = "flex"
 container.style.flexDirection = "column"
-container.style.height = "640px"
-container.style.width = "640px"
+container.style.height = "800px"
+container.style.width = "800px"
 
-for (let i = 0; i < 16; i++) {
-    let div = document.createElement("div")
-    div.style.display = "flex"
-    for (let j = 0; j < 16; j++) {
-        let subdiv = document.createElement("div")
-        subdiv.style.border = "2px solid black"
-        subdiv.addEventListener("mouseover", function(e) {
-            e.target.style.backgroundColor = "black"
-        })
-        if (i != 15) {
-            subdiv.style.borderBottom = "0"
-        }
-        if (j != 15) {
-            subdiv.style.borderRight = "0"
-        }
-        subdiv.style.height = "40px"
-        subdiv.style.width = "40px"
-        div.appendChild(subdiv)
+let default_squares = 16
+
+let button = document.querySelector("#new")
+
+button.addEventListener("click", function() {
+    new_grid_squares = prompt("Enter grid size:")
+    new_grid_squares = parseInt(new_grid_squares)
+    if (new_grid_squares <= 100) {
+        container.innerHTML = ''
+        generate_grid(new_grid_squares)
     }
-    container.appendChild(div)
+})
+
+function generate_grid(squares) {
+    for (let i = 0; i < squares; i++) {
+        let div = document.createElement("div")
+        div.style.display = "flex"
+        let square_size = (800 - ((squares+1) * 2)) / squares
+        for (let j = 0; j < squares; j++) {
+            let subdiv = document.createElement("div")
+            subdiv.style.border = "2px solid black"
+            subdiv.addEventListener("mouseover", function(e) {
+                e.target.style.backgroundColor = "black"
+            })
+            if (i != (squares-1)) {
+                subdiv.style.borderBottom = "0"
+            }
+            if (j != (squares-1)) {
+                subdiv.style.borderRight = "0"
+            }
+            subdiv.style.height = square_size.toString() + "px"
+            subdiv.style.width = square_size.toString() + "px"
+            div.appendChild(subdiv)
+        }
+        container.appendChild(div)
+    }
 }
 
+generate_grid(default_squares)
 
